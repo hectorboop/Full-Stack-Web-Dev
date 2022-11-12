@@ -44,18 +44,29 @@ router.post('/', async (req, res) => {
             errorMessage: 'Error creating Author'
         })
     }
+})
 
-    // author.save((err, newAuthor) => {
-    //     if (err) {
-    //         res.render('authors/new', {
-    //             author: author,
-    //             errorMessage: 'Error creating Author'
-    //         })
-    //     } else {
-    //         //res.redirect(`authors/${newAuthor.id}`)
-    //         res.redirect(`authors`)
-    //     }
-    // })
+router.get('/:id', (req, res) => {
+    res.send('Show Author ' + req.params.id)
+})
+
+router.get('/:id/edit', async (req, res) => {
+    try {
+        const author = await Author.findById(req.params.id)
+        res.render('authors/edit', {author : author})
+    } catch {
+        res.redirect('/authors')
+    }
+
+    res.send('Edit Author' + req.params.id)
+})
+
+router.put('/:id', (req, res) => {
+    res.send('Update Author' + req.params.id)
+})
+
+router.delete('/:id', (req, res) => {
+    res.send('Delete Author' + req.params.id)
 })
 
 module.exports = router
